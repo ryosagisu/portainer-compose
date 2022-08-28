@@ -13,4 +13,4 @@ services:
       - TZ=Asia/Jakarta
     volumes:
       - ${QBITTORRENT_VOLUME}/config:/config
-      - ${TORRENT_VOLUME}:/torrents
+      - ${TORRENT_VOLUME}:/data/torrents
