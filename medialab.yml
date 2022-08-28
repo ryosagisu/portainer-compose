@@ -1,0 +1,29 @@
+version: "3.2"
+services:
+  radarr:
+    container_name: radarr
+    image: cr.hotio.dev/hotio/radarr:latest
+    restart: unless-stopped
+    network_mode: "container:gluetun"
+    environment:
+      - PUID=${RADARR_PUID}
+      - PGID=${RADARR_PGID}
+      - TZ=Asia/Jakarta
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${RADARR_VOLUME}/config:/config
+      - ${DATA_VOLUME}:/data
+  sonarr:
+    container_name: sonarr
+    image: cr.hotio.dev/hotio/sonarr:latest
+    restart: unless-stopped
+    network_mode: "container:gluetun"
+    ports:
+    environment:
+      - PUID=${SONARR_PUID}
+      - PGID=${SONARR_PGID}
+      - TZ=Asia/Jakarta
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${SONARR_VOLUME}/config:/config
+      - ${DATA_VOLUME}:/data

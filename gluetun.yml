@@ -10,6 +10,8 @@ services:
     ports:
       - ${GLUETUN_PORT}:8388/tcp
       - ${GLUETUN_PORT}:8388/udp
+      - ${RADARR_PORT}:7878
+      - ${SONARR_PORT}:8989
     volumes:
       - ${GLUETUN_VOLUME}:/gluetun
     environment:
