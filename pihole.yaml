@@ -17,6 +17,8 @@ services:
         ipv4_address: ${PIHOLE_IP}
 
   cloudflared:
+    container_name: cloudflared
+    user: root
     restart: unless-stopped
     image: cloudflare/cloudflared
     command: proxy-dns
@@ -25,8 +27,6 @@ services:
       - "TUNNEL_METRICS=0.0.0.0:${CLOUDFLARED_METRICS_PORT}"
       - "TUNNEL_DNS_ADDRESS=0.0.0.0"
       - "TUNNEL_DNS_PORT=53"
-    sysctls:
-      - net.ipv4.ip_unprivileged_port_start=53
     networks:
       priv_lan:
         ipv4_address: ${CLOUDFLARED_IP}
