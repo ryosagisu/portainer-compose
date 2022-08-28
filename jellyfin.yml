@@ -13,3 +13,6 @@ services:
       - TZ=Asia/Jakarta
     volumes:
       - ${JELLYFIN_VOLUME}/config:/config
+      - ${MEDIA_VOLUME}:/media
+    devices:
+      - "/dev/dri:/dev/dri"
