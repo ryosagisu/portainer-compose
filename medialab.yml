@@ -1,4 +1,4 @@
-version: "3.2"
+version: "3.7"
 services:
   radarr:
     container_name: radarr
@@ -7,12 +7,13 @@ services:
     network_mode: "container:gluetun"
     environment:
       - PUID=${RADARR_PUID}
-      - PGID=${RADARR_PGID}
+      - PGID=${DOCKER_PGID}
       - TZ=Asia/Jakarta
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${RADARR_VOLUME}/config:/config
       - ${DATA_VOLUME}:/data
+
   sonarr:
     container_name: sonarr
     image: cr.hotio.dev/hotio/sonarr:latest
@@ -20,9 +21,21 @@ services:
     network_mode: "container:gluetun"
     environment:
       - PUID=${SONARR_PUID}
-      - PGID=${SONARR_PGID}
+      - PGID=${DOCKER_PGID}
       - TZ=Asia/Jakarta
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${SONARR_VOLUME}/config:/config
       - ${DATA_VOLUME}:/data
+
+  prowlarr:
+    container_name: prowlarr
+    image: cr.hotio.dev/hotio/prowlarr:testing
+    network_mode: "container:gluetun"
+    environment:
+      - PUID=${PROWLARR_PUID}
+      - PGID=${DOCKER_PGID}
+      - UMASK=002
+      - TZ=Asia/Jakarta
+    volumes:
+      - ${PROWLARR_VOLUME}/config:/config
