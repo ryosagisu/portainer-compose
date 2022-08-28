@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  jellyfin:
+    container_name: jellyfin
+    image: cr.hotio.dev/hotio/jellyfin
+    ports:
+      - "${JELLYFIN_PORT}:8096"
+    environment:
+      - PUID=${JELLYFIN_PUID}
+      - PGID=${JELLYFIN_PGID}
+      - UMASK=002
+      - TZ=Asia/Jakarta
+    volumes:
+      - ${JELLYFIN_VOLUME}/config:/config
