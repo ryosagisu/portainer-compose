@@ -12,6 +12,7 @@ services:
       - ${GLUETUN_PORT}:8388/udp
       - ${RADARR_PORT}:7878
       - ${SONARR_PORT}:8989
+      - ${TORRENT_PORT}:8080
     volumes:
       - ${GLUETUN_VOLUME}:/gluetun
     environment:
