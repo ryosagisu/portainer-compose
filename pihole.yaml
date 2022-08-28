@@ -1,0 +1,36 @@
+version: "3.6"
+
+services:
+  pihole:
+    container_name: pihole
+    restart: unless-stopped
+    image: pihole/pihole
+    environment:
+      - "TZ=Asia/Jakarta"
+      - "DNS1=${CLOUDFLARED_IP}#53"
+      - "DNS2=no"
+    volumes:
+      - "${PIHOLE_VOLUME}/etc/pihole:/etc/pihole"
+      - "${PIHOLE_VOLUME}/etc/dnsmasq.d:/etc/dnsmasq.d"
+    networks:
+      priv_lan:
+        ipv4_address: ${PIHOLE_IP}
+
+  cloudflared:
+    restart: unless-stopped
+    image: cloudflare/cloudflared
+    command: proxy-dns
+    environment:
+      - "TUNNEL_DNS_UPSTREAM=https://1.1.1.1/dns-query,https://1.0.0.1/dns-query"
+      - "TUNNEL_METRICS=0.0.0.0:${CLOUDFLARED_METRICS_PORT}"
+      - "TUNNEL_DNS_ADDRESS=0.0.0.0"
+      - "TUNNEL_DNS_PORT=53"
+    sysctls:
+      - net.ipv4.ip_unprivileged_port_start=53
+    networks:
+      priv_lan:
+        ipv4_address: ${CLOUDFLARED_IP}
+
+networks:
+  priv_lan:
+    external: true
