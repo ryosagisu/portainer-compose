@@ -1,0 +1,22 @@
+version: "3"
+services:
+  gluetun:
+    image: qmcgaw/gluetun:latest
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - ${GLUETUN_PORT}:8388/tcp
+      - ${GLUETUN_PORT}:8388/udp
+    volumes:
+      - ${GLUETUN_VOLUME}:/gluetun
+    environment:
+      - VPN_SERVICE_PROVIDER=mullvad
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=${GLUETUN_WIREGUARD_KEY}
+      - WIREGUARD_ADDRESSES=${GLUETUN_WIREGUARD_ADDRESSES}
+      - SERVER_CITIES=Singapore
+      # Timezone for accurate log times
+      - TZ=Asia/Jakarta
