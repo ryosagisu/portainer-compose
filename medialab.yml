@@ -10,6 +10,7 @@ services:
       - PGID=${DOCKER_PGID}
       - UMASK=002
       - TZ=Asia/Jakarta
+      - WEBUI_PORTS=${QBITTORRENT_PORT}/tcp,${QBITTORRENT_PORT}/udp
     volumes:
       - ${QBITTORRENT_VOLUME}/config:/config
       - ${DATA_VOLUME}/torrents:/data/torrents
