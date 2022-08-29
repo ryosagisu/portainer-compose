@@ -1,5 +1,19 @@
 version: "3.7"
 services:
+  qbittorrent:
+    container_name: qbittorrent
+    image: cr.hotio.dev/hotio/qbittorrent:latest
+    restart: unless-stopped
+    network_mode: "container:gluetun"
+    environment:
+      - PUID=${QBITTORRENT_PUID}
+      - PGID=${DOCKER_PGID}
+      - UMASK=002
+      - TZ=Asia/Jakarta
+    volumes:
+      - ${QBITTORRENT_VOLUME}/config:/config
+      - ${DATA_VOLUME}/torrents:/data/torrents
+
   radarr:
     container_name: radarr
     image: cr.hotio.dev/hotio/radarr:latest
@@ -53,3 +67,17 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${BAZARR_VOLUME}/config:/config
       - ${DATA_VOLUME}/media:/data/media
+
+  sabnzbd:
+    container_name: sabnzbd
+    image: cr.hotio.dev/hotio/sabnzbd:latest
+    restart: unless-stopped
+    network_mode: "container:gluetun"
+    environment:
+      - PUID=${SABNZBD_PUID}
+      - PGID=${DOCKER_PGID}
+      - TZ=Asia/Jakarta
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${SABNZBD_VOLUME}/config:/config
+      - ${DATA_VOLUME}/usenet:/data/usenet
