@@ -10,7 +10,6 @@ services:
       - PGID=${DOCKER_PGID}
       - UMASK=002
       - TZ=Asia/Jakarta
-      - WEBUI_PORTS=${QBITTORRENT_PORT}/tcp,${QBITTORRENT_PORT}/udp
     volumes:
       - ${QBITTORRENT_VOLUME}/config:/config
       - ${DATA_VOLUME}/torrents:/data/torrents
@@ -69,16 +68,16 @@ services:
       - ${BAZARR_VOLUME}/config:/config
       - ${DATA_VOLUME}/media:/data/media
 
-  sabnzbd:
-    container_name: sabnzbd
-    image: cr.hotio.dev/hotio/sabnzbd:latest
+  nzbget:
+    container_name: nzbget
+    image: cr.hotio.dev/hotio/nzbget:latest
     restart: unless-stopped
     network_mode: "container:gluetun"
     environment:
-      - PUID=${SABNZBD_PUID}
+      - PUID=${NZBGET_PUID}
       - PGID=${DOCKER_PGID}
       - TZ=Asia/Jakarta
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${SABNZBD_VOLUME}/config:/config
+      - ${NZBGET_VOLUME}/config:/config
       - ${DATA_VOLUME}/usenet:/data/usenet
