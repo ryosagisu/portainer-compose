@@ -39,3 +39,17 @@ services:
       - TZ=Asia/Jakarta
     volumes:
       - ${PROWLARR_VOLUME}/config:/config
+
+  bazarr:
+    container_name: bazarr
+    image: cr.hotio.dev/hotio/bazarr:latest
+    network_mode: "container:gluetun"
+    restart: unless-stopped
+    environment:
+      - PUID=${BAZARR_PUID}
+      - PGID=${DOCKER_PGID}
+      - TZ=Asia/Jakarta
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${BAZARR_VOLUME}/config:/config
+      - ${DATA_VOLUME}/media:/data/media
