@@ -24,5 +24,8 @@ services:
       - WIREGUARD_PRIVATE_KEY=${GLUETUN_WIREGUARD_KEY}
       - WIREGUARD_ADDRESSES=${GLUETUN_WIREGUARD_ADDRESSES}
       - SERVER_CITIES=Singapore
+      - SHADOWSOCKS=on
+      - SHADOWSOCKS_LOG=on
+      - SHADOWSOCKS_PASSWORD=${SHADOWSOCKS_PASSWORD}
       # Timezone for accurate log times
       - TZ=Asia/Jakarta
