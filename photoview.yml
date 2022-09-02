@@ -47,4 +47,5 @@ services:
       # If the photos are located at `/home/user/photos`, then change this value
       # to the following: `/home/user/photos:/photos:ro`.
       # You can mount multiple paths, if your photos are spread across multiple directories.
-      - ${PHOTO_VOLUME}:/photos:ro
+      - ${PHOTO_VOLUME}/photoview:/photos/photoview:ro
+      - ${PHOTOVIEW_VOLUME}/${USER1}:/photos/${USER1}:ro
