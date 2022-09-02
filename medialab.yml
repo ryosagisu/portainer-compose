@@ -23,10 +23,13 @@ services:
       - PUID=${RADARR_PUID}
       - PGID=${DOCKER_PGID}
       - TZ=Asia/Jakarta
+      - TP_HOTIO=true
+      - TP_THEME=organizr
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${RADARR_VOLUME}/config:/config
       - ${DATA_VOLUME}:/data
+      - ${RADARR_VOLUME}/etc/cont-init.d/98-themepark-radarr:/etc/cont-init.d/99-themepark
 
   sonarr:
     container_name: sonarr
@@ -37,10 +40,13 @@ services:
       - PUID=${SONARR_PUID}
       - PGID=${DOCKER_PGID}
       - TZ=Asia/Jakarta
+      - TP_HOTIO=true
+      - TP_THEME=organizr
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${SONARR_VOLUME}/config:/config
       - ${DATA_VOLUME}:/data
+      - ${SONARR_VOLUME}/etc/cont-init.d/98-themepark-sonarr:/etc/cont-init.d/99-themepark
 
   prowlarr:
     container_name: prowlarr
@@ -67,17 +73,3 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${BAZARR_VOLUME}/config:/config
       - ${DATA_VOLUME}/media:/data/media
-
-  nzbget:
-    container_name: nzbget
-    image: cr.hotio.dev/hotio/nzbget:latest
-    restart: unless-stopped
-    network_mode: "container:gluetun"
-    environment:
-      - PUID=${NZBGET_PUID}
-      - PGID=${DOCKER_PGID}
-      - TZ=Asia/Jakarta
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ${NZBGET_VOLUME}/config:/config
-      - ${DATA_VOLUME}/usenet:/data/usenet
