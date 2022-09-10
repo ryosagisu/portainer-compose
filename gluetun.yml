@@ -3,6 +3,7 @@ services:
   gluetun:
     image: qmcgaw/gluetun:latest
     container_name: gluetun
+    restart: always
     cap_add:
       - NET_ADMIN
     devices:

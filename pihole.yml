@@ -3,7 +3,7 @@ version: "3.6"
 services:
   pihole:
     container_name: pihole
-    restart: unless-stopped
+    restart: always
     image: pihole/pihole:latest
     environment:
       - "TZ=Asia/Jakarta"
@@ -19,7 +19,7 @@ services:
   cloudflared:
     container_name: cloudflared
     user: root
-    restart: unless-stopped
+    restart: always
     image: cloudflare/cloudflared:latest
     command: proxy-dns
     environment:

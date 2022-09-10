@@ -4,6 +4,7 @@ services:
   jellyfin:
     container_name: jellyfin
     image: cr.hotio.dev/hotio/jellyfin
+    restart: always
     ports:
       - "${JELLYFIN_PORT}:8096"
     environment:

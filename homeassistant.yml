@@ -3,11 +3,11 @@ version: "3.6"
 services:
   homeassistant:
     container_name: homeassistant
+    restart: always
     image: "ghcr.io/home-assistant/home-assistant:stable"
     volumes:
       - ${HOMEASSISTANT_VOLUME}/config:/config
       - /etc/localtime:/etc/localtime:ro
-    restart: unless-stopped
     privileged: true
     networks:
       priv_lan:

@@ -51,6 +51,7 @@ services:
   prowlarr:
     container_name: prowlarr
     image: cr.hotio.dev/hotio/prowlarr:testing
+    restart: unless-stopped
     network_mode: "container:gluetun"
     environment:
       - PUID=${PROWLARR_PUID}
