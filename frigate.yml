@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  frigate:
+    container_name: frigate
+    # privileged: true # this may not be necessary for all setups
+    restart: always
+    image: blakeblackshear/frigate:stable-amd64
+    shm_size: "64mb" # update for your cameras based on calculation above
+    devices:
+      - "/dev/dri/renderD128:/dev/dri/renderD128"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${FRIGATE_VOLUME}/frigate/config.yml:/config/config.yml:ro
+      - ${FRIGATE_VOLUME}/frigate/storage:/media/frigate
+    ports:
+      - "${FRIGATE_RTMP_PORT}:1935" # RTMP feeds
+      - "${FRIGATE_PORT}:5000"
+    environment:
+      - FRIGATE_RTSP_PASSWORD=${FRIGATE_RTSP_PASSWORD}
+      - PUID=${FRIGATE_PUID}
+      - PGID=${FRIGATE_PGID}
+
+  mqtt:
+    container_name: frigate-mqtt
+    restart: always
+    image: eclipse-mosquitto:2
+    volumes:
+      - ${FRIGATE_VOLUME}/mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ${FRIGATE_VOLUME}/mqtt/data:/mosquitto/data
+    # ports:
+      # - "${MOSQUITTO_PACKET_PORT}:1883"
+      # - "${MOSQUITTO_PORT}:9001"
+    environment:
+      - PUID=${FRIGATE_PUID}
+      - PGID=${FRIGATE_PGID}
