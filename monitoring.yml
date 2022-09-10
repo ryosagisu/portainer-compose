@@ -25,7 +25,7 @@ services:
       - PUID=${PROMETHEUS_PUID}
       - PGID=${DOCKER_PGID}
     volumes:
-      - ${PROMETHEUS_VOLUME}/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ${PROMETHEUS_VOLUME}/etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - ${PROMETHEUS_VOLUME}/prometheus:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -34,22 +34,26 @@ services:
       - '--web.console.templates=/etc/prometheus/consoles'
       - '--web.enable-lifecycle'
 
-  node-exporter:
-    image: prom/node-exporter:latest
-    container_name: node-exporter
-    restart: always
-    ports:
-      - "${NODE_EXPORTER_PORT}:9100"
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
-    command:
-      - '--path.procfs=/host/proc'
-      - '--path.rootfs=/rootfs'
-      - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+  # node-exporter:
+  #   image: prom/node-exporter:latest
+  #   container_name: node-exporter
+  #   restart: always
+  #   ports:
+  #     - "${NODE_EXPORTER_PORT}:9100"
+  #   volumes:
+  #     - /proc:/host/proc:ro
+  #     - /sys:/host/sys:ro
+  #     - /:/rootfs:ro
+  #   command:
+  #     - '--path.procfs=/host/proc'
+  #     - '--path.rootfs=/rootfs'
+  #     - '--path.sysfs=/host/sys'
+  #     - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
 
-# networks:
-#   priv_lan:
-#     external: true
+  snmp-exporter:
+    container_name: monitoring-snmp
+    image: prom/snmp-exporter:latest
+    volumes:
+      - ${PROMETHEUS_VOLUME}/snmp-exporter:/etc/snmp_exporter
+    restart: always
+    command: --config.file=/etc/snmp_exporter/snmp.yml
