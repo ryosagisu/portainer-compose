@@ -49,5 +49,5 @@ services:
       # to the following: `/home/user/photos:/photos:ro`.
       # You can mount multiple paths, if your photos are spread across multiple directories.
       - ${PHOTO_VOLUME}/photoview:/photos/photoview:ro
-      - ${USER_PHOTO_VOLUME}/${USER1}:/photos/${USER1}:ro
-      - ${USER_PHOTO_VOLUME}/${USER2}:/photos/${USER2}:ro
+      - ${USER_PHOTO_VOLUME}/${USER1}/Photos:/photos/${USER1}:ro
+      - ${USER_PHOTO_VOLUME}/${USER2}/Photos:/photos/${USER2}:ro
