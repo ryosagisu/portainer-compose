@@ -4,7 +4,7 @@ services:
   pihole:
     container_name: pihole
     restart: unless-stopped
-    image: pihole/pihole
+    image: pihole/pihole:latest
     environment:
       - "TZ=Asia/Jakarta"
       - "DNS1=${CLOUDFLARED_IP}#53"
@@ -20,7 +20,7 @@ services:
     container_name: cloudflared
     user: root
     restart: unless-stopped
-    image: cloudflare/cloudflared
+    image: cloudflare/cloudflared:latest
     command: proxy-dns
     environment:
       - "TUNNEL_DNS_UPSTREAM=https://1.1.1.1/dns-query,https://1.0.0.1/dns-query"
