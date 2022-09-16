@@ -3,7 +3,7 @@ version: "3.7"
 services:
   jellyfin:
     container_name: jellyfin
-    image: cr.hotio.dev/hotio/jellyfin
+    image: linuxserver/jellyfin:latest
     restart: always
     ports:
       - "${JELLYFIN_PORT}:8096"
@@ -14,6 +14,7 @@ services:
       - TZ=Asia/Jakarta
     volumes:
       - ${JELLYFIN_VOLUME}/config:/config
+      - ${JELLYFIN_VOLUME}/config/custom-cont-init.d:/custom-cont-init.d:ro
       - ${MEDIA_VOLUME}:/media
     devices:
       - "/dev/dri:/dev/dri"
