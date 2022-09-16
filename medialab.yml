@@ -74,3 +74,14 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${BAZARR_VOLUME}/config:/config
       - ${DATA_VOLUME}/media:/data/media
+
+  recyclarr:
+    container_name: recyclarr
+    image: ghcr.io/recyclarr/recyclarr:latest
+    network_mode: "container:gluetun"
+    init: true
+    user: ${RECYCLARR_PUID}:${DOCKER_PGID}
+    environment:
+      - TZ=Asia/Jakarta
+    volumes:
+      - ${RECYCLARR_VOLUME}/config:/config
