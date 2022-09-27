@@ -55,7 +55,7 @@ services:
 
   prowlarr:
     container_name: prowlarr
-    image: cr.hotio.dev/hotio/prowlarr:testing
+    image: cr.hotio.dev/hotio/prowlarr:latest
     restart: unless-stopped
     network_mode: "container:gluetun"
     environment:
