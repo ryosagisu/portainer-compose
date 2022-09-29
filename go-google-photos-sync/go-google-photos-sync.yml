@@ -1,0 +1,9 @@
+version: "3.6"
+
+services:
+  go-google-photos-sync:
+    container_name: go-google-photos-sync
+    image: "ryosagisu/go-google-photos-sync:latest"
+    volumes:
+      - ${GO_GOOGLE_PHOTOS_SYNC_VOLUME}/configs:/configs
+      - ${GO_GOOGLE_PHOTOS_SYNC_VOLUME}/google-photo:/google-photo
