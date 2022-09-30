@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  magicmirror:
+    container_name: magicmirror
+    image: karsten13/magicmirror:latest
+    restart: unless-stopped
+    ports:
+      - "${MAGICMIRROR_PORT}:8080"
+    volumes:
+      - ${MAGICMIRROR_VOLUME}/config:/opt/magic_mirror/config
+      - ${MAGICMIRROR_VOLUME}/modules:/opt/magic_mirror/modules
+      - ${MAGICMIRROR_VOLUME}/css:/opt/magic_mirror/css
+      - ${PHOTO_VOLUME}/photo:/photo
+    environment:
+      - PUID=${MAGICMIRROR_PUID}
+      - MM_OVERRIDE_CSS="false"
+      - MM_OVERRIDE_DEFAULT_MODULES="false"
+      - TZ=${TIMEZONE}
+    command: 
+      - npm
+      - run
+      - server

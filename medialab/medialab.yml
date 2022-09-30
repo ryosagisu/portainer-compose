@@ -9,7 +9,7 @@ services:
       - PUID=${QBITTORRENT_PUID}
       - PGID=${DOCKER_PGID}
       - UMASK=002
-      - TZ=Asia/Jakarta
+      - TZ=${TIMEZONE}
     volumes:
       - ${QBITTORRENT_VOLUME}/config:/config
       - ${DATA_VOLUME}/torrents:/data/torrents
@@ -27,7 +27,7 @@ services:
     environment:
       - PUID=${RADARR_PUID}
       - PGID=${DOCKER_PGID}
-      - TZ=Asia/Jakarta
+      - TZ=${TIMEZONE}
       - TP_HOTIO=true
       - TP_THEME=organizr
     volumes:
@@ -44,7 +44,7 @@ services:
     environment:
       - PUID=${SONARR_PUID}
       - PGID=${DOCKER_PGID}
-      - TZ=Asia/Jakarta
+      - TZ=${TIMEZONE}
       - TP_HOTIO=true
       - TP_THEME=organizr
     volumes:
@@ -62,7 +62,7 @@ services:
       - PUID=${PROWLARR_PUID}
       - PGID=${DOCKER_PGID}
       - UMASK=002
-      - TZ=Asia/Jakarta
+      - TZ=${TIMEZONE}
     volumes:
       - ${PROWLARR_VOLUME}/config:/config
 
@@ -74,7 +74,7 @@ services:
     environment:
       - PUID=${BAZARR_PUID}
       - PGID=${DOCKER_PGID}
-      - TZ=Asia/Jakarta
+      - TZ=${TIMEZONE}
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${BAZARR_VOLUME}/config:/config
@@ -87,6 +87,6 @@ services:
     init: true
     user: ${RECYCLARR_PUID}:${DOCKER_PGID}
     environment:
-      - TZ=Asia/Jakarta
+      - TZ=${TIMEZONE}
     volumes:
       - ${RECYCLARR_VOLUME}/config:/config

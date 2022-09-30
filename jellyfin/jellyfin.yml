@@ -11,7 +11,7 @@ services:
       - PUID=${JELLYFIN_PUID}
       - PGID=${JELLYFIN_PGID}
       - UMASK=002
-      - TZ=Asia/Jakarta
+      - TZ=${TIMEZONE}
     volumes:
       - ${JELLYFIN_VOLUME}/config:/config
       - ${JELLYFIN_VOLUME}/config/custom-cont-init.d:/custom-cont-init.d:ro

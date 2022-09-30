@@ -6,7 +6,7 @@ services:
     restart: always
     image: pihole/pihole:latest
     environment:
-      - "TZ=Asia/Jakarta"
+      - "TZ=${TIMEZONE}"
       - "DNS1=${CLOUDFLARED_IP}#53"
       - "DNS2=no"
     volumes:
