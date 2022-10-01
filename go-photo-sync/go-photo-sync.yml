@@ -10,3 +10,4 @@ services:
       - ${PHOTO_VOLUME}/google-photo:/google-photo
     environment:
       - CONFIG_PATH=/configs
+      - IMAGE_PATH=/google-photo

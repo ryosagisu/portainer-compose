@@ -42,14 +42,14 @@ services:
       PHOTOPRISM_DATABASE_PASSWORD: "${MARIADB_PASSWORD}"
       PHOTOPRISM_SITE_CAPTION: "AI-Powered Photos App"
     ## Start as non-root user before initialization (supported: 0, 33, 50-99, 500-600, and 900-1200):
-    user: "${PHOTOPRISM1_PUID}:1000"
+    user: "${PHOTOPRISM_PUID}:${DOCKER_GUID}"
     ## Share hardware devices with FFmpeg and TensorFlow (optional):
     devices:
      - "/dev/dri:/dev/dri"                         # Intel QSV
     working_dir: "/photoprism" # do not change or remove
     volumes:
-      - "${PHOTO_VOLUME}/photoprism:/photoprism/originals"
-      - "${USER_PHOTO_VOLUME}/${USER1}/Photos:/photoprism/originals/${USER1}:ro"
+      # - "${PHOTO_VOLUME}/photoprism:/photoprism/originals"
+      - "${USER_PHOTO_VOLUME}/${USER1}/Photos:/photoprism/originals/${USER1}"
       # - "~/Import:/photoprism/import"                  # *Optional* base folder from which files can be imported to originals
       - "${PHOTOPRISM_VOLUME}/storage:/photoprism/storage"
 
@@ -66,6 +66,19 @@ services:
       MARIADB_AUTO_UPGRADE: "1"
       MARIADB_INITDB_SKIP_TZINFO: "1"
       MARIADB_ROOT_PASSWORD: "${MARIADB_ROOT_PASSWORD}"
-      # MARIADB_DATABASE: "photoprism"
-      # MARIADB_USER: "photoprism"
-      # MARIADB_PASSWORD: "insecure"
+
+  go-photo-sync:
+    image: "ryosagisu/go-photo-sync:latest"
+    user: "${PHOTOPRISM_PUID}:${DOCKER_GUID}"
+    depends_on:
+      - mariadb
+    volumes:
+      - "${USER_PHOTO_VOLUME}/${USER1}/Photos:/originals/${USER1}:ro"
+      - "${PHOTOPRISM_VOLUME}/photosync/configs:/configs"
+      - '${PHOTO_VOLUME}/photoprism:/photoprism'
+    environment:
+      CONFIG_PATH: "/configs"
+      IMAGE_PATH: "/photoprism"
+      SYNC_SERVICE: "photoprism"
+    # command:
+    #   - "-command=debug"
