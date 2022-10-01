@@ -67,6 +67,15 @@ services:
       MARIADB_INITDB_SKIP_TZINFO: "1"
       MARIADB_ROOT_PASSWORD: "${MARIADB_ROOT_PASSWORD}"
 
+  ## Ofelia Job Runner (recommended for running background jobs)
+  ## see https://github.com/mcuadros/ofelia
+  ofelia:
+    restart: unless-stopped
+    image: mcuadros/ofelia:latest
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "${PHOTOPRISM_VOLUME}/etc/ofelia/config.ini:/etc/ofelia/config.ini"
+
   go-photo-sync:
     image: "ryosagisu/go-photo-sync:latest"
     user: "${PHOTOPRISM_PUID}:${DOCKER_GUID}"
