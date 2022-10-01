@@ -4,7 +4,10 @@ services:
   go-google-photos-sync:
     container_name: go-google-photos-sync
     image: "ryosagisu/go-google-photos-sync:latest"
-    user: "${PHOTOSYNC_PUID}"
+    user: "${PHOTOSYNC_PUID}:${DOCKER_GUID}"
     volumes:
       - ${GO_GOOGLE_PHOTOS_SYNC_VOLUME}/configs:/configs
       - ${PHOTO_VOLUME}/google-photo:/google-photo
+    environment:
+      - PUID=${PHOTOSYNC_PUID}
+      - GUID=${DOCKER_GUID}
