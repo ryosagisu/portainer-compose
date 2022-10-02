@@ -92,7 +92,7 @@ services:
     image: photoprism/photoprism:latest
     depends_on:
       - mariadb
-    # restart: unless-stopped
+    restart: unless-stopped
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
@@ -128,6 +128,48 @@ services:
     volumes:
       - "${USER_PHOTO_VOLUME}/${USER3}/Photos:/photoprism/originals/${USER3}"
       - "${PHOTOPRISM_VOLUME}/${USER3}/storage:/photoprism/storage"
+
+  photoprism4:
+    container_name: photoprism4
+    image: photoprism/photoprism:latest
+    depends_on:
+      - mariadb
+    # restart: unless-stopped
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+    ports:
+      - "${PHOTOPRISM4_PORT}:2342" # HTTP port (host:container)
+    environment:
+      ## INITIAL PASSWORD FOR "admin" USER, MINIMUM 8 CHARACTERS
+      PHOTOPRISM_ADMIN_PASSWORD: "${PHOTOPRISM4_PASSWORD}"
+      PHOTOPRISM_ORIGINALS_LIMIT: -1                 # file size limit for originals in MB (increase for high-res video)
+      PHOTOPRISM_HTTP_COMPRESSION: "gzip"            # improves transfer speed and bandwidth utilization (none or gzip)
+      PHOTOPRISM_LOG_LEVEL: "error"                  # log level: trace, debug, info, warning, error, fatal, or panic
+      PHOTOPRISM_READONLY: "false"                   # do not modify originals directory (reduced functionality)
+      PHOTOPRISM_DISABLE_CHOWN: "true"               # disables updating storage permissions via chmod and chown on startup
+      PHOTOPRISM_DISABLE_WEBDAV: "false"             # disables built-in WebDAV server
+      PHOTOPRISM_DISABLE_SETTINGS: "false"           # disables settings UI and API
+      PHOTOPRISM_DISABLE_TENSORFLOW: "false"         # disables all features depending on TensorFlow
+      PHOTOPRISM_DISABLE_FACES: "false"              # disables face detection and recognition (requires TensorFlow)
+      PHOTOPRISM_DISABLE_CLASSIFICATION: "false"     # disables image classification (requires TensorFlow)
+      PHOTOPRISM_DISABLE_RAW: "false"                # disables indexing and conversion of RAW files
+      PHOTOPRISM_RAW_PRESETS: "false"                # enables applying user presets when converting RAW files (reduces performance)
+      PHOTOPRISM_DETECT_NSFW: "false"                # automatically flags photos as private that MAY be offensive (requires TensorFlow)
+      PHOTOPRISM_UPLOAD_NSFW: "true"                 # allows uploads that MAY be offensive (no effect without TensorFlow)
+      PHOTOPRISM_DATABASE_DRIVER: "mysql"            # use MariaDB 10.5+ or MySQL 8+ instead of SQLite for improved performance
+      PHOTOPRISM_DATABASE_SERVER: "mariadb:3306"     # MariaDB or MySQL database server (hostname:port)
+      PHOTOPRISM_DATABASE_NAME: "${USER4}"
+      PHOTOPRISM_DATABASE_USER: "${MARIADB_USER}"
+      PHOTOPRISM_DATABASE_PASSWORD: "${MARIADB_PASSWORD}"
+      PHOTOPRISM_SITE_CAPTION: "AI-Powered Photos App"
+    user: "${PHOTOPRISM_PUID}:${DOCKER_GUID}"
+    devices:
+     - "/dev/dri:/dev/dri"                         # Intel QSV
+    working_dir: "/photoprism" # do not change or remove
+    volumes:
+      - "${USER_PHOTO_VOLUME}/${USER4}/Photos:/photoprism/originals/${USER4}"
+      - "${PHOTOPRISM_VOLUME}/${USER4}/storage:/photoprism/storage"
 
   mariadb:
     restart: unless-stopped
