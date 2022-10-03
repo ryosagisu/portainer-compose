@@ -1,6 +1,9 @@
 version: "3"
 
 services:
+  # MagicMirror² is an open source modular smart mirror platform.
+  # With a growing list of installable modules, the MagicMirror² allows you to convert your hallway or bathroom mirror into your personal assistant.
+  # https://github.com/MichMich/MagicMirror
   magicmirror:
     container_name: magicmirror
     image: karsten13/magicmirror:latest
