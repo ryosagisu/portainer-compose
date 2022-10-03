@@ -1,6 +1,10 @@
 version: "3.5"
 
 services:
+  # PhotoPrism® is an AI-Powered Photos App for the Decentralized Web. 
+  # It makes use of the latest technologies to tag and find pictures automatically without getting in your way. 
+  # You can run it at home, on a private server, or in the cloud.
+  # https://github.com/photoprism/photoprism
   photoprism1:
     container_name: photoprism1
     image: photoprism/photoprism:latest

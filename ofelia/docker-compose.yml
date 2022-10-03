@@ -1,8 +1,9 @@
 version: "3.5"
 
 services:
-  # Ofelia Job Runner (recommended for running background jobs)
-  # see https://github.com/mcuadros/ofelia
+  # https://github.com/mcuadros/ofelia
+  # Ofelia is a modern and low footprint job scheduler for docker environments, built on Go. 
+  # Ofelia aims to be a replacement for the old fashioned cron.
   ofelia:
     container_name: ofelia
     restart: unless-stopped
