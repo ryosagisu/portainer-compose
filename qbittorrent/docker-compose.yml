@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+  # https://github.com/qbittorrent/qBittorrent
+  # A BitTorrent client in Qt
+  qbittorrent:
+    container_name: qbittorrent
+    image: cr.hotio.dev/hotio/qbittorrent:latest
+    restart: unless-stopped
+    network_mode: "container:gluetun"
+    volumes:
+      - "${QBITTORRENT_VOLUME}/config:/config"
+      - "${DATA_VOLUME}/torrents:/data/torrents"
+    environment:
+      - "PUID=${QBITTORRENT_PUID}"
+      - "PGID=${DOCKER_PGID}"
+      - "UMASK=002"
+      - "TZ=${TIMEZONE}"

@@ -1,5 +1,3 @@
-[qBittorrent](https://github.com/qbittorrent/qBittorrent) used for torrent downloader
-
 [Radarr](https://github.com/Radarr/Radarr) used for movie collection manager
 
 [Sonarr](https://github.com/Sonarr/Sonarr) used for series collection manager

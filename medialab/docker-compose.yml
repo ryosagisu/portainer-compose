@@ -1,19 +1,5 @@
 version: "3.7"
 services:
-  qbittorrent:
-    container_name: qbittorrent
-    image: cr.hotio.dev/hotio/qbittorrent:latest
-    restart: unless-stopped
-    network_mode: "container:gluetun"
-    environment:
-      - PUID=${QBITTORRENT_PUID}
-      - PGID=${DOCKER_PGID}
-      - UMASK=002
-      - TZ=${TIMEZONE}
-    volumes:
-      - ${QBITTORRENT_VOLUME}/config:/config
-      - ${DATA_VOLUME}/torrents:/data/torrents
-
   radarr:
     container_name: radarr
     image: cr.hotio.dev/hotio/radarr:latest
