@@ -6,16 +6,16 @@ services:
     restart: unless-stopped
     network_mode: "container:gluetun"
     environment:
-      - PUID=${RADARR_PUID}
-      - PGID=${DOCKER_PGID}
-      - TZ=${TIMEZONE}
-      - TP_HOTIO=true
-      - TP_THEME=organizr
+      - "PUID=${RADARR_PUID}"
+      - "PGID=${DOCKER_PGID}"
+      - "TZ=${TIMEZONE}"
+      - "TP_HOTIO=true"
+      - "TP_THEME=organizr"
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ${RADARR_VOLUME}/config:/config
-      - ${DATA_VOLUME}:/data
-      - ${RADARR_VOLUME}/etc/cont-init.d/98-themepark-radarr:/etc/cont-init.d/99-themepark
+      - "/etc/localtime:/etc/localtime:ro"
+      - "${RADARR_VOLUME}/config:/config"
+      - "${DATA_VOLUME}:/data"
+      - "${RADARR_VOLUME}/etc/cont-init.d/98-themepark-radarr:/etc/cont-init.d/99-themepark"
 
   sonarr:
     container_name: sonarr
@@ -23,16 +23,16 @@ services:
     restart: unless-stopped
     network_mode: "container:gluetun"
     environment:
-      - PUID=${SONARR_PUID}
-      - PGID=${DOCKER_PGID}
-      - TZ=${TIMEZONE}
-      - TP_HOTIO=true
-      - TP_THEME=organizr
+      - "PUID=${SONARR_PUID}"
+      - "PGID=${DOCKER_PGID}"
+      - "TZ=${TIMEZONE}"
+      - "TP_HOTIO=true"
+      - "TP_THEME=organizr"
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ${SONARR_VOLUME}/config:/config
-      - ${DATA_VOLUME}:/data
-      - ${SONARR_VOLUME}/etc/cont-init.d/98-themepark-sonarr:/etc/cont-init.d/99-themepark
+      - "/etc/localtime:/etc/localtime:ro"
+      - "${SONARR_VOLUME}/config:/config"
+      - "${DATA_VOLUME}:/data"
+      - "${SONARR_VOLUME}/etc/cont-init.d/98-themepark-sonarr:/etc/cont-init.d/99-themepark"
 
   prowlarr:
     container_name: prowlarr
@@ -40,12 +40,12 @@ services:
     restart: unless-stopped
     network_mode: "container:gluetun"
     environment:
-      - PUID=${PROWLARR_PUID}
-      - PGID=${DOCKER_PGID}
-      - UMASK=002
-      - TZ=${TIMEZONE}
+      - "PUID=${PROWLARR_PUID}"
+      - "PGID=${DOCKER_PGID}"
+      - "UMASK=002"
+      - "TZ=${TIMEZONE}"
     volumes:
-      - ${PROWLARR_VOLUME}/config:/config
+      - "${PROWLARR_VOLUME}/config:/config"
 
   bazarr:
     container_name: bazarr
@@ -53,13 +53,13 @@ services:
     network_mode: "container:gluetun"
     restart: unless-stopped
     environment:
-      - PUID=${BAZARR_PUID}
-      - PGID=${DOCKER_PGID}
-      - TZ=${TIMEZONE}
+      - "PUID=${BAZARR_PUID}"
+      - "PGID=${DOCKER_PGID}"
+      - "TZ=${TIMEZONE}"
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ${BAZARR_VOLUME}/config:/config
-      - ${DATA_VOLUME}/media:/data/media
+      - "/etc/localtime:/etc/localtime:ro"
+      - "${BAZARR_VOLUME}/config:/config"
+      - "${DATA_VOLUME}/media:/data/media"
 
   recyclarr:
     container_name: recyclarr
@@ -68,6 +68,22 @@ services:
     init: true
     user: ${RECYCLARR_PUID}:${DOCKER_PGID}
     environment:
-      - TZ=${TIMEZONE}
+      - "TZ=${TIMEZONE}"
     volumes:
-      - ${RECYCLARR_VOLUME}/config:/config
+      - "${RECYCLARR_VOLUME}/config:/config"
+
+  # https://github.com/qbittorrent/qBittorrent
+  # A BitTorrent client in Qt
+  qbittorrent:
+    container_name: qbittorrent
+    image: cr.hotio.dev/hotio/qbittorrent:latest
+    restart: unless-stopped
+    network_mode: "container:gluetun"
+    volumes:
+      - "${QBITTORRENT_VOLUME}/config:/config"
+      - "${DATA_VOLUME}/torrents:/data/torrents"
+    environment:
+      - "PUID=${QBITTORRENT_PUID}"
+      - "PGID=${DOCKER_PGID}"
+      - "UMASK=002"
+      - "TZ=${TIMEZONE}"
