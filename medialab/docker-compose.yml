@@ -16,6 +16,12 @@ services:
       - "${RADARR_VOLUME}/config:/config"
       - "${DATA_VOLUME}:/data"
       - "${RADARR_VOLUME}/etc/cont-init.d/98-themepark-radarr:/etc/cont-init.d/99-themepark"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://1.1.1.1"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
   sonarr:
     container_name: sonarr
@@ -33,6 +39,12 @@ services:
       - "${SONARR_VOLUME}/config:/config"
       - "${DATA_VOLUME}:/data"
       - "${SONARR_VOLUME}/etc/cont-init.d/98-themepark-sonarr:/etc/cont-init.d/99-themepark"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://1.1.1.1"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
   prowlarr:
     container_name: prowlarr
@@ -46,6 +58,12 @@ services:
       - "TZ=${TIMEZONE}"
     volumes:
       - "${PROWLARR_VOLUME}/config:/config"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://1.1.1.1"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
   bazarr:
     container_name: bazarr
@@ -60,6 +78,12 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
       - "${BAZARR_VOLUME}/config:/config"
       - "${DATA_VOLUME}/media:/data/media"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://1.1.1.1"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
   recyclarr:
     container_name: recyclarr
@@ -71,6 +95,12 @@ services:
       - "TZ=${TIMEZONE}"
     volumes:
       - "${RECYCLARR_VOLUME}/config:/config"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://1.1.1.1"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
   # https://github.com/qbittorrent/qBittorrent
   # A BitTorrent client in Qt
@@ -87,3 +117,9 @@ services:
       - "PGID=${DOCKER_PGID}"
       - "UMASK=002"
       - "TZ=${TIMEZONE}"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://1.1.1.1"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
