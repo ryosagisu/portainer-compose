@@ -95,12 +95,6 @@ services:
       - "TZ=${TIMEZONE}"
     volumes:
       - "${RECYCLARR_VOLUME}/config:/config"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "https://1.1.1.1"]
-      interval: 10s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
 
   # https://github.com/qbittorrent/qBittorrent
   # A BitTorrent client in Qt
