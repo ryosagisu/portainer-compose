@@ -252,3 +252,4 @@ services:
     environment:
       CONFIG_PATH: "/configs"
       IMAGE_PATH: "/photo"
+      SYNC_SERVICE: "photoprism"
