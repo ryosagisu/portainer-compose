@@ -73,3 +73,6 @@ services:
       - "${PHOTOPRISM_VOLUME}/photosync/configs:/configs"
       - "${PHOTO_VOLUME}/photo:/photo"
       - "${USER_PHOTO_VOLUME}/${USER1}/Photos:/originals/${USER1}:ro"
+    environment:
+      CONFIG_PATH: "/configs"
+      IMAGE_PATH: "/photo"
