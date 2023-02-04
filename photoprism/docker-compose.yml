@@ -251,5 +251,5 @@ services:
       - "${USER_PHOTO_VOLUME}/${USER5}/Photos:/originals/${USER5}:ro"
     environment:
       CONFIG_PATH: "/configs"
-      IMAGE_PATH: "/photo"
+      IMAGE_PATH: "/photo/photoprism"
       SYNC_SERVICE: "photoprism"
