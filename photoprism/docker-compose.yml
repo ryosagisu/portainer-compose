@@ -249,3 +249,6 @@ services:
       - "${USER_PHOTO_VOLUME}/${USER3}/Photos:/originals/${USER3}:ro"
       - "${USER_PHOTO_VOLUME}/${USER4}/Photos:/originals/${USER4}:ro"
       - "${USER_PHOTO_VOLUME}/${USER5}/Photos:/originals/${USER5}:ro"
+    environment:
+      CONFIG_PATH: "/configs"
+      IMAGE_PATH: "/photo"
