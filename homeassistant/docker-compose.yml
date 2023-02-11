@@ -11,24 +11,27 @@ services:
     privileged: true
     network_mode: host
 
+  eclipse-mosquitto:
+    container_name: "mosquitto"
+    image: "eclipse-mosquitto:latest"
+    network_mode: host
+    volumes:
+      - "${HOMEASSISTANT_VOLUME}/mosquitto/config:/mosquitto/config"
+
   room-assistant:
     container_name: "roomassistant"
     image: "mkerix/room-assistant:latest"
     network_mode: host
+    depends_on:
+      - eclipse-mosquitto
     cap_add:
       - NET_ADMIN
     volumes:
       - "${HOMEASSISTANT_VOLUME}/roomassistant/config:/room-assistant/config"
       - "/var/run/dbus:/var/run/dbus"
 
-  eclipse-mosquitto:
-    container_name: "homeassistant-mosquitto"
-    image: "eclipse-mosquitto:latest"
-    network_mode: host
-    volumes:
-      - "${HOMEASSISTANT_VOLUME}/mosquitto/config:/mosquitto/config"
-
   node-red:
+    container_name: "nodered"
     image: nodered/node-red:latest
     network_mode: host
     volumes:
