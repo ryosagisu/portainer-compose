@@ -37,5 +37,6 @@ services:
     volumes:
       - "${HOMEASSISTANT_VOLUME}/nodered/config:/config"
       - "${HOMEASSISTANT_VOLUME}/nodered/data:/data"
+      - "${HOMEASSISTANT_VOLUME}/nodered/ssh:/usr/src/node-red/.ssh"
     environment:
       - TZ=${TIMEZONE}
