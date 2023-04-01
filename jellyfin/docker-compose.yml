@@ -6,8 +6,7 @@ services:
     image: linuxserver/jellyfin:latest
     restart: always
     networks:
-      ts-net:
-        ipv4_address: ${JELLYFIN_IP}
+      - ts-net
     ports:
       - "${JELLYFIN_PORT}:8096"
     environment:
