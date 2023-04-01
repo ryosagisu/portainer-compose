@@ -18,3 +18,12 @@ services:
       - ${MEDIA_VOLUME}:/media
     devices:
       - "/dev/dri:/dev/dri"
+
+  tailscale:
+    hostname: ts-jellyfin
+    image: tailscale/tailscale:stable
+    volumes:
+      - "/dev/net/tun:/dev/net/tun"
+      - "${JELLYFIN_VOLUME}/var/lib:/var/lib"
+    environment:
+      - TS_AUTHKEY=${TS_AUTHKEY}
