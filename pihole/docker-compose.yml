@@ -43,7 +43,11 @@ services:
     networks:
       priv_lan:
         ipv4_address: ${NGINX_IP}
+      svc_lan:
 
 networks:
   priv_lan:
     external: true
+  svc_lan:
+    external: true
+    name: ${PIHOLE_SERVICE_NETWORK}
