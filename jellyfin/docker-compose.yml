@@ -22,6 +22,8 @@ services:
   tailscale:
     hostname: ts-jellyfin
     image: tailscale/tailscale:stable
+    restart: unless-stopped
+    network_mode: "service:jellyfin"
     volumes:
       - "/dev/net/tun:/dev/net/tun"
       - "${JELLYFIN_VOLUME}/var/lib:/var/lib"
