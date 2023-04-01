@@ -5,6 +5,9 @@ services:
     container_name: jellyfin
     image: linuxserver/jellyfin:latest
     restart: always
+    networks:
+      ts-net:
+        ipv4_address: ${JELLYFIN_IP}
     ports:
       - "${JELLYFIN_PORT}:8096"
     environment:
@@ -19,13 +22,7 @@ services:
     devices:
       - "/dev/dri:/dev/dri"
 
-  tailscale:
-    hostname: ts-jellyfin
-    image: tailscale/tailscale:stable
-    restart: unless-stopped
-    network_mode: "service:jellyfin"
-    volumes:
-      - "/dev/net/tun:/dev/net/tun"
-      - "${JELLYFIN_VOLUME}/var/lib:/var/lib"
-    environment:
-      - TS_AUTHKEY=${TS_AUTHKEY}
+networks:
+  ts-net:
+    external: true
+    name: ${TS_NETWORK}
