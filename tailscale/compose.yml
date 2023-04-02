@@ -9,3 +9,13 @@ services:
       - "${TS_VOLUME}/var/lib:/var/lib"
     environment:
       - TS_STATE_DIR=/var/lib/tailscale
+
+  nginx:
+    image: "nginx:stable"
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - "${TS_VOLUME}/nginx.conf:/etc/nginx/nginx.conf:ro"
+    logging:
+      options:
+        max-size: 128m
