@@ -13,8 +13,9 @@ services:
       - "${PIHOLE_VOLUME}/etc/dnsmasq.d:/etc/dnsmasq.d"
     networks:
       priv_lan:
-        ipv4_address: ${PIHOLE_IP}
+        ipv4_address: ${PIHOLE_PRIVATE_IP}
       default:
+        ipv4_address: ${PIHOLE_DEFAULT_IP}
 
   cloudflared:
     container_name: cloudflared
@@ -41,8 +42,9 @@ services:
       options:
         max-size: 128m
     networks:
-      - default
-      - svc_lan
+      default:
+        ipv4_address: ${NGINX_IP}
+      svc_lan:
 
 networks:
   priv_lan:
