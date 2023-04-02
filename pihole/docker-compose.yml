@@ -42,8 +42,10 @@ services:
       options:
         max-size: 128m
     networks:
+      priv_lan:
+        ipv4_address: ${NGINX_PRIVATE_IP}
       default:
-        ipv4_address: ${NGINX_IP}
+        ipv4_address: ${NGINX_DEFAULT_IP}
       svc_lan:
 
 networks:
