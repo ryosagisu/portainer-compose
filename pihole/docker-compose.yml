@@ -8,7 +8,6 @@ services:
     environment:
       - "TZ=${TIMEZONE}"
       - "DNS1=${CLOUDFLARED_IP}#53"
-      - "DNS2=no"
     volumes:
       - "${PIHOLE_VOLUME}/etc/pihole:/etc/pihole"
       - "${PIHOLE_VOLUME}/etc/dnsmasq.d:/etc/dnsmasq.d"
@@ -29,7 +28,8 @@ services:
       - "TUNNEL_DNS_ADDRESS=0.0.0.0"
       - "TUNNEL_DNS_PORT=53"
     networks:
-      - svc_lan
+      svc_lan:
+        ipv4_address: ${CLOUDFLARED_IP}
 
   nginx:
     container_name: nginx
