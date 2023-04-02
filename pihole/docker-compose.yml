@@ -42,10 +42,14 @@ services:
         max-size: 128m
     networks:
       - default
+      - svc_lan
 
 networks:
   priv_lan:
     external: true
+  svc_lan:
+    external: true
+    name: ${SERVICE_NETWORK}
   default:
     ipam:
       config:
