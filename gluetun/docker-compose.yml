@@ -13,11 +13,6 @@ services:
     ports:
       - "${GLUETUN_PORT}:8388/tcp"
       - "${GLUETUN_PORT}:8388/udp"
-      - "${RADARR_PORT}:7878"
-      - "${SONARR_PORT}:8989"
-      - "${QBITTORRENT_PORT}:8080"
-      - "${PROWLARR_PORT}:9696"
-      - "${BAZARR_PORT}:6767"
     volumes:
       - "${GLUETUN_VOLUME}:/gluetun"
     environment:
