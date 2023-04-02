@@ -30,3 +30,10 @@ services:
       - "SHADOWSOCKS_LOG=on"
       - "SHADOWSOCKS_PASSWORD=${SHADOWSOCKS_PASSWORD}"
       - "TZ=${TIMEZONE}"
+    networks:
+      - svc_lan
+
+networks:
+  svc_lan:
+    external: true
+    name: ${SERVICE_NETWORK}
