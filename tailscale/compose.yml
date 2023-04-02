@@ -1,0 +1,11 @@
+version: "3.3"
+services:
+  tailscale:
+    hostname: ${TS_HOSTNAME}
+    image: tailscale/tailscale
+    network_mode: host
+    volumes:
+      - "/dev/net/tun:/dev/net/tun"
+      - "${TS_VOLUME}/var/lib:/var/lib"
+    environment:
+      - TS_STATE_DIR=/var/lib/tailscale
