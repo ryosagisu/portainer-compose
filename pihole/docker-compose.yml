@@ -8,6 +8,7 @@ services:
     environment:
       - "TZ=${TIMEZONE}"
       - "DNS1=${CLOUDFLARED_IP}#53"
+      - "DNS2=no"
     volumes:
       - "${PIHOLE_VOLUME}/etc/pihole:/etc/pihole"
       - "${PIHOLE_VOLUME}/etc/dnsmasq.d:/etc/dnsmasq.d"
