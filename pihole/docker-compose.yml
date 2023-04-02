@@ -14,7 +14,7 @@ services:
     networks:
       priv_lan:
         ipv4_address: ${PIHOLE_IP}
-      svc_lan:
+      pihole_default:
 
   cloudflared:
     container_name: cloudflared
@@ -28,7 +28,7 @@ services:
       - "TUNNEL_DNS_ADDRESS=0.0.0.0"
       - "TUNNEL_DNS_PORT=53"
     networks:
-      svc_lan:
+      pihole_default:
         ipv4_address: ${CLOUDFLARED_IP}
 
   nginx:
@@ -41,11 +41,12 @@ services:
       options:
         max-size: 128m
     networks:
-      - svc_lan
+      - pihole_default
 
 networks:
   priv_lan:
     external: true
-  svc_lan:
-    external: true
-    name: ${PIHOLE_SERVICE_NETWORK}
+  pihole_default:
+    ipam:
+      config:
+        - subnet: ${NETWORK_SUBNET}
