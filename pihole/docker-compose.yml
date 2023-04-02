@@ -15,6 +15,7 @@ services:
     networks:
       priv_lan:
         ipv4_address: ${PIHOLE_IP}
+      svc_lan:
 
   cloudflared:
     container_name: cloudflared
@@ -28,8 +29,7 @@ services:
       - "TUNNEL_DNS_ADDRESS=0.0.0.0"
       - "TUNNEL_DNS_PORT=53"
     networks:
-      priv_lan:
-        ipv4_address: ${CLOUDFLARED_IP}
+      - svc_lan
 
   nginx:
     container_name: nginx
@@ -41,9 +41,7 @@ services:
       options:
         max-size: 128m
     networks:
-      priv_lan:
-        ipv4_address: ${NGINX_IP}
-      svc_lan:
+      - svc_lan
 
 networks:
   priv_lan:
