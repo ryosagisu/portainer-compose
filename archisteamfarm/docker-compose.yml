@@ -5,7 +5,9 @@ services:
     container_name: archisteamfarm
     restart: always
     user: "${ARCHISTEAMFARM_PUID}:${ARCHISTEAMFARM_GUID}"
-    ports:
-      - "${ARCHISTEAMFARM_PORT}:1242"
     volumes:
       - "${ARCHISTEAMFARM_VOLUME}/config:/app/config"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.archisteamfarm.rule=Host(`archisteamfarm.${ARCHISTEAMFARM_DOMAIN}`)"
+      - "traefik.http.services.archisteamfarm.loadbalancer.server.port=1242"
