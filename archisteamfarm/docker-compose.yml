@@ -9,5 +9,7 @@ services:
       - "${ARCHISTEAMFARM_VOLUME}/config:/app/config"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.archisteamfarm.rule=Host(`archisteamfarm.${ARCHISTEAMFARM_DOMAIN}`)"
-      - "traefik.http.services.archisteamfarm.loadbalancer.server.port=1242"
+      - "traefik.http.routers.archisteamfarm-ts.rule=Host(`archisteamfarm.${ARCHISTEAMFARM_DOMAIN}`) && ClientIP(`${TS_IPS}`)"
+      - "traefik.http.services.archisteamfarm-ts.loadbalancer.server.port=1242"
+      - "traefik.http.routers.archisteamfarm-int.rule=Host(`archisteamfarm.${ARCHISTEAMFARM_DOMAIN}`) && ClientIP(`${INT_IPS}`)"
+      - "traefik.http.services.archisteamfarm-int.loadbalancer.server.port=1242"
