@@ -33,28 +33,28 @@ services:
       default:
         ipv4_address: ${CLOUDFLARED_IP}
 
-  nginx:
-    container_name: nginx
-    image: "nginx:stable"
-    restart: unless-stopped
-    volumes:
-      - "${PIHOLE_VOLUME}/nginx.conf:/etc/nginx/nginx.conf:ro"
-    logging:
-      options:
-        max-size: 128m
+  traefik:
+    image: traefik:latest
+    command:
+      - --api.insecure=true
+      - --api.dashboard=true
+      - --providers.file.directory=/dynamic_config
+      - --entrypoints.http.address=:80
+      - --entrypoints.https.address=:443
     networks:
       priv_lan:
-        ipv4_address: ${NGINX_PRIVATE_IP}
-      default:
-        ipv4_address: ${NGINX_DEFAULT_IP}
+        ipv4_address: ${TRAEFIK_IP}
+      traefik_lan:
       svc_lan:
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - "${PIHOLE_VOLUME}/dynamic_config:/dynamic_config"
 
 networks:
   priv_lan:
     external: true
-  svc_lan:
+  traefik_lan:
     external: true
-    name: ${SERVICE_NETWORK}
   default:
     ipam:
       config:
