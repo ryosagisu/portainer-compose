@@ -14,8 +14,9 @@ services:
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
-    ports:
-      - "${PHOTOPRISM1_PORT}:2342" # HTTP port (host:container)
+    networks:
+      - ts-net
+      - default
     environment:
       ## INITIAL PASSWORD FOR "admin" USER, MINIMUM 8 CHARACTERS
       PHOTOPRISM_ADMIN_PASSWORD: "${PHOTOPRISM1_PASSWORD}"
@@ -253,3 +254,8 @@ services:
       CONFIG_PATH: "/configs"
       IMAGE_PATH: "/photo/photoprism"
       SYNC_SERVICE: "photoprism"
+
+networks:
+  ts-net:
+    external: true
+    name: ${TS_NETWORK}
