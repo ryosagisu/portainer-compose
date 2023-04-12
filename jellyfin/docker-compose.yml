@@ -7,9 +7,7 @@ services:
     restart: always
     networks:
       - ts_net
-      - svc_lan
-    ports:
-      - "${JELLYFIN_PORT}:8096"
+      - default
     environment:
       - PUID=${JELLYFIN_PUID}
       - PGID=${JELLYFIN_PGID}
@@ -23,9 +21,6 @@ services:
       - "/dev/dri:/dev/dri"
 
 networks:
-  ts_net:
+  ts-net:
     external: true
     name: ${TS_NETWORK}
-  svc_lan:
-    external: true
-    name: ${SERVICE_NETWORK}
