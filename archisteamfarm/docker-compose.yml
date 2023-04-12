@@ -7,6 +7,7 @@ services:
     user: "${ARCHISTEAMFARM_PUID}:${ARCHISTEAMFARM_GUID}"
     networks:
       - ts-net
+      - default
     volumes:
       - "${ARCHISTEAMFARM_VOLUME}/config:/app/config"
 
