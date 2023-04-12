@@ -1,15 +1,16 @@
-version: "3"
+version: "3.8"
 services:
   archisteamfarm:
     image: justarchi/archisteamfarm:latest
     container_name: archisteamfarm
     restart: always
     user: "${ARCHISTEAMFARM_PUID}:${ARCHISTEAMFARM_GUID}"
+    networks:
+      - ts-net
     volumes:
       - "${ARCHISTEAMFARM_VOLUME}/config:/app/config"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.archisteamfarm-ts.rule=Host(`archisteamfarm.${ARCHISTEAMFARM_DOMAIN}`) && ClientIP(`${TS_IPS}`)"
-      - "traefik.http.services.archisteamfarm-ts.loadbalancer.server.port=1242"
-      - "traefik.http.routers.archisteamfarm-int.rule=Host(`archisteamfarm.${ARCHISTEAMFARM_DOMAIN}`) && ClientIP(`${INT_IPS}`)"
-      - "traefik.http.services.archisteamfarm-int.loadbalancer.server.port=1242"
+
+networks:
+  ts-net:
+    external: true
+    name: ${TS_NETWORK}
