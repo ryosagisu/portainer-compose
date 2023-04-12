@@ -6,21 +6,40 @@ services:
     restart: unless-stopped
     networks:
       - ts-net
+      - default
+    ports:
+      - "${TRAEFIK_PORT}:80"
+      - "${TRAEFIK_DASHBOARD_PORT}:8080"
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
     volumes:
       - "/dev/net/tun:/dev/net/tun"
       - "${TS_VOLUME}/var/lib:/var/lib"
     environment:
       - TS_STATE_DIR=/var/lib/tailscale
 
-  nginx:
-    image: "nginx:stable"
-    restart: unless-stopped
+  traefik:
+    image: traefik:latest
+    command:
+      - --api.insecure=true
+      - --api.dashboard=true
+      - --providers.file.directory=/dynamic_config
+      - --entrypoints.http.address=:80
+      - --entrypoints.https.address=:443
     network_mode: "service:tailscale"
     volumes:
-      - "${TS_VOLUME}/nginx.conf:/etc/nginx/nginx.conf:ro"
-    logging:
-      options:
-        max-size: 128m
+      - /etc/localtime:/etc/localtime:ro
+      - "${TS_VOLUME}/dynamic_config:/dynamic_config"
+
+  dnsmasq:
+    restart: always
+    image: strm/dnsmasq
+    network_mode: "service:tailscale"
+    volumes:
+      - "${TS_VOLUME}/dnsmasq.conf:/etc/dnsmasq.conf"
+    cap_add:
+      - NET_ADMIN
 
 networks:
   ts-net:
