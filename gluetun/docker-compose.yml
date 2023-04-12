@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 services:
   # https://github.com/qdm12/gluetun/
   # Lightweight swiss-knife-like VPN client to multiple VPN service providers
@@ -26,9 +26,10 @@ services:
       - "SHADOWSOCKS_PASSWORD=${SHADOWSOCKS_PASSWORD}"
       - "TZ=${TIMEZONE}"
     networks:
-      - svc_lan
+      - ts-net
+      - default
 
 networks:
-  svc_lan:
+  ts-net:
     external: true
-    name: ${SERVICE_NETWORK}
+    name: ${TS_NETWORK}
