@@ -8,6 +8,7 @@ services:
     networks:
       - ts-net
       - default
+      - traefik_lan
     environment:
       - PUID=${JELLYFIN_PUID}
       - PGID=${JELLYFIN_PGID}
@@ -24,3 +25,5 @@ networks:
   ts-net:
     external: true
     name: ${TS_NETWORK}
+  traefik_lan:
+    external: true
