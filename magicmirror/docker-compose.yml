@@ -8,8 +8,8 @@ services:
     container_name: magicmirror
     image: karsten13/magicmirror:latest
     restart: unless-stopped
-    ports:
-      - "${MAGICMIRROR_PORT}:8080"
+    networks:
+      - traefik_lan
     volumes:
       - ${MAGICMIRROR_VOLUME}/config:/opt/magic_mirror/config
       - ${MAGICMIRROR_VOLUME}/modules:/opt/magic_mirror/modules
@@ -24,3 +24,7 @@ services:
       - npm
       - run
       - server
+
+networks:
+  traefik_lan:
+    external: true

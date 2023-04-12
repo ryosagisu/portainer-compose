@@ -8,6 +8,7 @@ services:
     networks:
       - ts-net
       - default
+      - traefik_lan
     volumes:
       - "${ARCHISTEAMFARM_VOLUME}/config:/app/config"
 
@@ -15,3 +16,5 @@ networks:
   ts-net:
     external: true
     name: ${TS_NETWORK}
+  traefik_lan:
+    external: true
