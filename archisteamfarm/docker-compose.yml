@@ -1,9 +1,16 @@
-version: "3"
+version: "3.8"
 services:
   archisteamfarm:
     image: justarchi/archisteamfarm:latest
     container_name: archisteamfarm
     restart: always
     user: "${ARCHISTEAMFARM_PUID}:${ARCHISTEAMFARM_GUID}"
+    networks:
+      - ts-net
     volumes:
       - "${ARCHISTEAMFARM_VOLUME}/config:/app/config"
+
+networks:
+  ts-net:
+    external: true
+    name: ${TS_NETWORK}
