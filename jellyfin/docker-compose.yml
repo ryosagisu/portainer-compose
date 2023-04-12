@@ -6,7 +6,7 @@ services:
     image: linuxserver/jellyfin:latest
     restart: always
     networks:
-      - ts_net
+      - ts-net
       - default
     environment:
       - PUID=${JELLYFIN_PUID}
