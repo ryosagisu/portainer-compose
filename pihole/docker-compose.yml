@@ -45,7 +45,6 @@ services:
       priv_lan:
         ipv4_address: ${TRAEFIK_IP}
       traefik_lan:
-      svc_lan:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - "${PIHOLE_VOLUME}/dynamic_config:/dynamic_config"
