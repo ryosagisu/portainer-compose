@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  dns:
+    container_name: dns
+    image: qmcgaw/dns
+    restart: always
+    environment:
+      - PROVIDERS=cloudflare,google,quad9
+    networks:
+      priv_lan:
+        ipv4_address: ${DNS_IP}
+
+networks:
+  priv_lan:
+    external: true
