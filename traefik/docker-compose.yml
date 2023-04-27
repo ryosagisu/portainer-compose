@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+  traefik:
+    image: traefik:latest
+    container_name: traefik
+    command:
+      - --api.insecure=true
+      - --api.dashboard=true
+      - --providers.file.directory=/dynamic_config
+      - --entrypoints.http.address=:80
+      - --entrypoints.https.address=:443
+    networks:
+      priv_lan:
+        ipv4_address: ${TRAEFIK_IP}
+      traefik_lan:
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - "${TRAEFIK_VOLUME}/dynamic_config:/dynamic_config"
+
+networks:
+  priv_lan:
+    external: true
+  traefik_lan:
+    external: true
