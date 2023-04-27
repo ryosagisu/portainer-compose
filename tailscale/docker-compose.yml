@@ -1,47 +1,20 @@
 version: "3.8"
 services:
   tailscale:
+    container_name: ${TS_HOSTNAME}
     hostname: ${TS_HOSTNAME}
     image: tailscale/tailscale:stable
     restart: unless-stopped
     networks:
-      - ts-net
-      - default
-    ports:
-      - "${TRAEFIK_PORT}:80"
-      - "${TRAEFIK_DASHBOARD_PORT}:8080"
-    dns:
-      - 127.0.0.1
-      - 1.1.1.1
+      priv_lan:
+        ipv4_address: ${TS_IP}
     volumes:
       - "/dev/net/tun:/dev/net/tun"
       - "${TS_VOLUME}/var/lib:/var/lib"
     environment:
       - TS_STATE_DIR=/var/lib/tailscale
-
-  traefik:
-    image: traefik:latest
-    command:
-      - --api.insecure=true
-      - --api.dashboard=true
-      - --providers.file.directory=/dynamic_config
-      - --entrypoints.http.address=:80
-      - --entrypoints.https.address=:443
-    network_mode: "service:tailscale"
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - "${TS_VOLUME}/dynamic_config:/dynamic_config"
-
-  dnsmasq:
-    restart: always
-    image: strm/dnsmasq
-    network_mode: "service:tailscale"
-    volumes:
-      - "${TS_VOLUME}/dnsmasq.conf:/etc/dnsmasq.conf"
-    cap_add:
-      - NET_ADMIN
+      - TS_ROUTES=${TS_ROUTES}
 
 networks:
-  ts-net:
+  priv_lan:
     external: true
-    name: ${TS_NETWORK}
