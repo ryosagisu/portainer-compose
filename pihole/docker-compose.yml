@@ -7,54 +7,15 @@ services:
     image: pihole/pihole:latest
     environment:
       - "TZ=${TIMEZONE}"
-      - "DNS1=${CLOUDFLARED_IP}#53"
+      - "DNS1=${DNS_IP}#53"
       - "DNS2=no"
     volumes:
       - "${PIHOLE_VOLUME}/etc/pihole:/etc/pihole"
       - "${PIHOLE_VOLUME}/etc/dnsmasq.d:/etc/dnsmasq.d"
     networks:
       priv_lan:
-        ipv4_address: ${PIHOLE_PRIVATE_IP}
-      default:
-        ipv4_address: ${PIHOLE_DEFAULT_IP}
-
-  cloudflared:
-    container_name: cloudflared
-    user: root
-    restart: always
-    image: cloudflare/cloudflared:latest
-    command: proxy-dns
-    environment:
-      - "TUNNEL_DNS_UPSTREAM=https://1.1.1.1/dns-query,https://1.0.0.1/dns-query"
-      - "TUNNEL_METRICS=0.0.0.0:${CLOUDFLARED_METRICS_PORT}"
-      - "TUNNEL_DNS_ADDRESS=0.0.0.0"
-      - "TUNNEL_DNS_PORT=53"
-    networks:
-      default:
-        ipv4_address: ${CLOUDFLARED_IP}
-
-  traefik:
-    image: traefik:latest
-    command:
-      - --api.insecure=true
-      - --api.dashboard=true
-      - --providers.file.directory=/dynamic_config
-      - --entrypoints.http.address=:80
-      - --entrypoints.https.address=:443
-    networks:
-      priv_lan:
-        ipv4_address: ${TRAEFIK_IP}
-      traefik_lan:
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - "${PIHOLE_VOLUME}/dynamic_config:/dynamic_config"
+        ipv4_address: ${PIHOLE_IP}
 
 networks:
   priv_lan:
     external: true
-  traefik_lan:
-    external: true
-  default:
-    ipam:
-      config:
-        - subnet: ${NETWORK_SUBNET}
