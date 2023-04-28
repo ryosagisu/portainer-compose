@@ -6,9 +6,8 @@ services:
     image: linuxserver/jellyfin:latest
     restart: always
     networks:
-      - ts-net
-      - default
       - traefik_lan
+      - default
     environment:
       - PUID=${JELLYFIN_PUID}
       - PGID=${JELLYFIN_PGID}
@@ -22,8 +21,5 @@ services:
       - "/dev/dri:/dev/dri"
 
 networks:
-  ts-net:
-    external: true
-    name: ${TS_NETWORK}
   traefik_lan:
     external: true
