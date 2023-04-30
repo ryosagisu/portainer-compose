@@ -4,11 +4,12 @@ services:
     container_name: dns
     image: qmcgaw/dns
     restart: always
-    environment:
-      - PROVIDERS=cloudflare,google,quad9
     networks:
       priv_lan:
         ipv4_address: ${DNS_IP}
+    environment:
+      - PROVIDERS=cloudflare,google,quad9
+      - BLOCK_MALICIOUS=off
 
 networks:
   priv_lan:
