@@ -8,8 +8,14 @@ services:
       - --api.insecure=true
       - --api.dashboard=true
       - --providers.file.directory=/dynamic_config
-      - --entrypoints.http.address=:80
-      - --entrypoints.https.address=:443
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --certificatesresolvers.leresolver.acme.email=${ACME_EMAIL}
+      - --certificatesresolvers.leresolver.acme.storage=acme.json
+      - --certificatesresolvers.leresolver.acme.tlschallenge=true
+      - --certificatesresolvers.leresolver.acme.httpchallenge=true
+      - --certificatesresolvers.leresolver.acme.httpchallenge.entrypoint=web
+      - --certificatesresolvers.leresolver.acme.dnschallenge.provider=digitalocean
     networks:
       priv_lan:
         ipv4_address: ${TRAEFIK_IP}
@@ -17,6 +23,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - "${TRAEFIK_VOLUME}/dynamic_config:/dynamic_config"
+      - "${TRAEFIK_VOLUME}/acme.json:/acme.json"
 
 networks:
   priv_lan:
