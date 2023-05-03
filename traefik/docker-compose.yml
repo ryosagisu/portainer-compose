@@ -10,7 +10,7 @@ services:
       - --providers.file.directory=/dynamic_config
       - --entrypoints.http.address=:80
       - --entrypoints.https.address=:443
-      - --accesslog=true
+      - --log.level=DEBUG
     networks:
       priv_lan:
         ipv4_address: ${TRAEFIK_IP}
