@@ -9,6 +9,7 @@ services:
     image: karsten13/magicmirror:latest
     restart: unless-stopped
     networks:
+      - default
       - traefik_lan
     volumes:
       - ${MAGICMIRROR_VOLUME}/config:/opt/magic_mirror/config

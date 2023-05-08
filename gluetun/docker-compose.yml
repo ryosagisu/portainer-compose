@@ -26,13 +26,9 @@ services:
       - "SHADOWSOCKS_PASSWORD=${SHADOWSOCKS_PASSWORD}"
       - "TZ=${TIMEZONE}"
     networks:
-      - ts-net
       - default
       - traefik_lan
 
 networks:
-  ts-net:
-    external: true
-    name: ${TS_NETWORK}
   traefik_lan:
     external: true
