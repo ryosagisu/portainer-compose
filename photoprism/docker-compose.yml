@@ -15,7 +15,6 @@ services:
       - seccomp:unconfined
       - apparmor:unconfined
     networks:
-      - ts-net
       - default
       - traefik_lan
     environment:
@@ -261,8 +260,5 @@ services:
       SYNC_SERVICE: "photoprism"
 
 networks:
-  ts-net:
-    external: true
-    name: ${TS_NETWORK}
   traefik_lan:
     external: true
