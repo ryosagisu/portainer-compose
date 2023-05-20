@@ -5,19 +5,44 @@ services:
     hostname: ${TS_HOSTNAME}
     image: tailscale/tailscale:stable
     restart: always
+    cap_add:
+      - NET_ADMIN
     networks:
       priv_lan:
         ipv4_address: ${TS_IP}
       traefik_lan:
-    ports:
-      - "80:80"
-      - "8080:8080"
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
     volumes:
       - "/dev/net/tun:/dev/net/tun"
       - "${TS_VOLUME}/var/lib:/var/lib"
     environment:
       - TS_STATE_DIR=/var/lib/tailscale
       - TS_ROUTES=${TS_ROUTES}
+
+  dnsmasq:
+    image: strm/dnsmasq
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    network_mode: "service:tailscale"
+    volumes:
+      - "${TS_VOLUME}/etc/dnsmasq.conf:/etc/dnsmasq.conf"
+
+  traefik:
+    image: traefik:latest
+    restart: always
+    network_mode: "service:tailscale"
+    command:
+      - --api.insecure=true
+      - --api.dashboard=true
+      - --providers.file.directory=/dynamic_config
+      - --entrypoints.http.address=:80
+      - --entrypoints.https.address=:443
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "${TS_VOLUME}/dynamic_config:/dynamic_config"
 
 networks:
   priv_lan:
