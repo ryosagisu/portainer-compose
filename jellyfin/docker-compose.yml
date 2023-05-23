@@ -15,6 +15,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${JELLYFIN_VOLUME}/config:/config
+      - ${JELLYFIN_VOLUME}/etc/jellyfin:/etc/jellyfin
       - ${JELLYFIN_VOLUME}/config/custom-cont-init.d:/custom-cont-init.d:ro
       - ${MEDIA_VOLUME}:/media
     devices:
