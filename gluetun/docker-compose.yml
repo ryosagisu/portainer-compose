@@ -3,7 +3,8 @@ services:
   # https://github.com/qdm12/gluetun/
   # Lightweight swiss-knife-like VPN client to multiple VPN service providers
   gluetun:
-    image: qmcgaw/gluetun:latest
+    image: qmcgaw/gluetun:v3.34
+    # image: qmcgaw/gluetun:latest
     container_name: gluetun
     restart: always
     cap_add:
