@@ -1,38 +1,18 @@
 version: "3.6"
 
 services:
-  homeassistant:
-    container_name: "homeassistant"
-    image: "ghcr.io/home-assistant/home-assistant:stable"
-    volumes:
-      - "${HOMEASSISTANT_VOLUME}/config:/config"
-      - "/etc/localtime:/etc/localtime:ro"
-    restart: unless-stopped
-    privileged: true
-    network_mode: host
-
   eclipse-mosquitto:
     container_name: "mosquitto"
     image: "eclipse-mosquitto:latest"
+    restart: always
     network_mode: host
     volumes:
       - "${HOMEASSISTANT_VOLUME}/mosquitto/config:/mosquitto/config"
 
-  room-assistant:
-    container_name: "roomassistant"
-    image: "mkerix/room-assistant:latest"
-    network_mode: host
-    depends_on:
-      - eclipse-mosquitto
-    cap_add:
-      - NET_ADMIN
-    volumes:
-      - "${HOMEASSISTANT_VOLUME}/roomassistant/config:/room-assistant/config"
-      - "/var/run/dbus:/var/run/dbus"
-
   node-red:
     container_name: "nodered"
     image: nodered/node-red:latest
+    restart: always
     network_mode: host
     volumes:
       - "${HOMEASSISTANT_VOLUME}/nodered/config:/config"
@@ -40,3 +20,16 @@ services:
       - "${HOMEASSISTANT_VOLUME}/nodered/ssh:/usr/src/node-red/.ssh"
     environment:
       - TZ=${TIMEZONE}
+
+  homeassistant:
+    container_name: "homeassistant"
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    restart: always
+    privileged: true
+    network_mode: host
+    depends_on:
+      - eclipse-mosquitto
+      - node-red
+    volumes:
+      - "${HOMEASSISTANT_VOLUME}/config:/config"
+      - "/etc/localtime:/etc/localtime:ro"
