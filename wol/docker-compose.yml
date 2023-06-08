@@ -1,8 +1,8 @@
 version: "3.3"
 services:
-    wol:
-        image: "rix1337/docker-wol_api:latest"
-        container_name: wol
-        network_mode: host
-        environment:
-            - PORT=8893
+  wol:
+    image: "rix1337/docker-wol_api:latest"
+    container_name: wol
+    network_mode: host
+    environment:
+      - "PORT=${PORT}"
