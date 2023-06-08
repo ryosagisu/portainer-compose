@@ -3,6 +3,12 @@ services:
   wol:
     image: "rix1337/docker-wol_api:latest"
     container_name: wol
-    network_mode: host
     environment:
-      - "PORT=${PORT}"
+      - "PORT=${WOL_PORT}"
+    networks:
+      priv_lan:
+        ipv4_address: ${WOL_IP}
+
+networks:
+  priv_lan:
+    external: true
