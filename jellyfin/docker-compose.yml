@@ -6,8 +6,9 @@ services:
     image: linuxserver/jellyfin:latest
     restart: always
     networks:
-      - traefik_lan
-      - default
+      priv_lan:
+        ipv4_address: ${JELLYFIN_IP}
+      traefik_lan:
     environment:
       - PUID=${JELLYFIN_PUID}
       - PGID=${JELLYFIN_PGID}
@@ -22,4 +23,6 @@ services:
 
 networks:
   traefik_lan:
+    external: true
+  priv_lan:
     external: true
