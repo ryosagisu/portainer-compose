@@ -36,8 +36,8 @@ services:
     restart: always
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - "${TRAEFIK_VOLUME}/dynamic_config:/dynamic_config"
-      - "${TRAEFIK_VOLUME}/etc/traefik:/etc/traefik"
+      - "${TS_VOLUME}/dynamic_config:/dynamic_config"
+      - "${TS_VOLUME}/etc/traefik:/etc/traefik"
 
 networks:
   priv_lan:
