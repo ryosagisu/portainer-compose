@@ -32,17 +32,12 @@ services:
 
   traefik:
     image: traefik:latest
-    restart: always
     network_mode: "service:tailscale"
-    command:
-      - --api.insecure=true
-      - --api.dashboard=true
-      - --providers.file.directory=/dynamic_config
-      - --entrypoints.http.address=:80
-      - --entrypoints.https.address=:443
+    restart: always
     volumes:
-      - "/etc/localtime:/etc/localtime:ro"
-      - "${TS_VOLUME}/dynamic_config:/dynamic_config"
+      - /etc/localtime:/etc/localtime:ro
+      - "${TRAEFIK_VOLUME}/dynamic_config:/dynamic_config"
+      - "${TRAEFIK_VOLUME}/etc/traefik:/etc/traefik"
 
 networks:
   priv_lan:
