@@ -18,6 +18,7 @@ services:
       - DEFAULT_WORKSPACE=/config/workspace #optional
     volumes:
       - "${CODESERVER_VOLUME}/config:/config"
+      - "${DATA_VOLUME}/data:/data"
     ports:
       - "${CODESERVER_PORT}:8443"
     restart: unless-stopped
