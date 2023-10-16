@@ -7,9 +7,9 @@ services:
       - default
       - traefik_lan
     environment:
-#      - PUID=1000
-#      - PGID=1000
-      - TZ={Timezone}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
 #      - PASSWORD=password #optional
 #      - HASHED_PASSWORD= #optional
 #      - SUDO_PASSWORD=password #optional
