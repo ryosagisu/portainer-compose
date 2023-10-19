@@ -2,7 +2,7 @@ version: "3.7"
 services:
   radarr:
     container_name: radarr
-    image: cr.hotio.dev/hotio/radarr:latest
+    image: ghcr.io/hotio/radarr:latest
     restart: unless-stopped
     network_mode: "container:gluetun"
     environment:
@@ -25,7 +25,7 @@ services:
 
   sonarr:
     container_name: sonarr
-    image: cr.hotio.dev/hotio/sonarr:latest
+    image: ghcr.io/hotio/sonarr:latest
     restart: unless-stopped
     network_mode: "container:gluetun"
     environment:
@@ -48,7 +48,7 @@ services:
 
   prowlarr:
     container_name: prowlarr
-    image: cr.hotio.dev/hotio/prowlarr:latest
+    image: ghcr.io/hotio/prowlarr:latest
     restart: unless-stopped
     network_mode: "container:gluetun"
     environment:
@@ -67,7 +67,7 @@ services:
 
   bazarr:
     container_name: bazarr
-    image: cr.hotio.dev/hotio/bazarr:latest
+    image: ghcr.io/hotio/bazarr:latest
     network_mode: "container:gluetun"
     restart: unless-stopped
     environment:
